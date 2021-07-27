@@ -1,0 +1,12 @@
+// 使用tsc --init可快速生成ts配置文件
+// 想要使用配置文件的时候，执行tsc命令不能带上文件名，否则会自动忽略掉文件
+{
+  "compilerOptions": { // 编译选项
+    "target":"ES2016", // 编译代码的版本
+    "module":"CommonJS", // 模块化版本
+    "lib": ["ES2016"], // 环境
+    "outDir": "./dist", // 编译文件输出地址
+  },
+  "include": ["./src"], // 指定需要编译的文件夹下所有ts文件
+  // "files": ["./src/index.ts"] //单独编译一个文件
+}
