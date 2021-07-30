@@ -99,3 +99,105 @@ function printShop(name:string, price:number):Shop {
         isDiscount: true
     }
 }
+
+// 函数的相关约束
+
+// 说明返回参数的情况
+/**
+ * 得到和
+ * @param a 
+ * @param b 
+ */
+function printSum(a: number, b:number):number;
+/**
+ * 得到拼接字符串
+ * @param a 
+ * @param b 
+ */
+function printSum(a: string, b:string):string;
+// 被约束后的函数，其中?表示此参数为可选
+function printSum(a: number | string, b?: number | string): number | string {
+    if (typeof a === 'number' && typeof b === 'number') {
+        return a + b;
+    } else if (typeof a === 'string' && typeof b === 'string') {
+        return a+b
+    }
+    printNever('参数应为同一种类型')
+}
+const result1 = printSum(1,2)
+
+// 扑克牌小练习
+type Arr = string[]
+class Poker{
+    isAbandon: boolean
+    pokerArr: Arr
+    decor: Arr
+    constructor(isAbandon: boolean) {
+        this.isAbandon = isAbandon
+        this.pokerArr = []
+        this.decor = ['♣️', '♠️', '♦️', '♥️']
+    }
+    // 创建牌组
+    create():void {
+        for(let i =1; i <= 13; i++) {
+            for (const iterator of this.decor) {
+                if (i <= 10) {
+                    this.pokerArr.push(`${iterator}${i}`)
+                } else if (i === 11) {
+                    this.pokerArr.push(`${iterator}J`)
+                } else if (i === 12) {
+                    this.pokerArr.push(`${iterator}Q`)
+                } else if (i === 13) {
+                    this.pokerArr.push(`${iterator}K`)
+                }
+            }
+        }
+        // 当前牌组需要大小王
+        if (this.isAbandon) {
+            this.pokerArr.push('大王','小王')
+        }
+    }
+    // 打印牌组 
+    print():void {
+        if (this.pokerArr.length === 0) {
+            console.log('需要先创建一副牌')
+            return
+        }
+        for (const iterator of this.pokerArr) {
+            console.log(iterator)
+        }
+    }
+    // 清空牌组
+    clear():void {
+        this.pokerArr = []
+        console.log('已清空牌组')
+    }
+    // 按照花色查询牌
+    searchPoker(color: '♣️' | '♠️' | '♦️' | '♥️'):void {
+        if (this.pokerArr.length === 0) {
+            console.log('需要先创建一副牌')
+            return
+        }
+        for (const iterator of this.pokerArr) {
+            if (iterator.indexOf(color) >= 0) {
+                console.log(iterator)
+            }
+        }
+    }
+    // 打乱牌组
+    shufflePoker():void {
+        if (this.pokerArr.length === 0) {
+            console.log('需要先创建一副牌')
+            return
+        }
+        this.pokerArr =  this.pokerArr.sort(item => Math.random() - 0.5)
+    }
+    
+}
+const poker = new Poker(true)
+poker.create()
+// poker.clear()
+// poker.print()
+// poker.searchPoker('♣️')
+poker.shufflePoker()
+poker.print()
