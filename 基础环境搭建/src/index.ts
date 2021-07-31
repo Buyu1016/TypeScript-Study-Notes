@@ -191,8 +191,7 @@ class Poker{
             return
         }
         this.pokerArr =  this.pokerArr.sort(item => Math.random() - 0.5)
-    }
-    
+    }    
 }
 const poker = new Poker(true)
 poker.create()

@@ -1,6 +1,6 @@
 {
 	"scripts": {
-		"dev": "nodemon --watch ./基础环境搭建/src -e ts --exec ts-node ./基础环境搭建/src/index.ts"
+		"dev": "nodemon --watch ./基础环境搭建/src -e ts --exec ts-node ./基础环境搭建/src/扩展:位枚举.ts"
 	},
 	"dependencies": {
 		"@types/node": "^16.4.3"
