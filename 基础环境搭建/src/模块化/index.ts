@@ -12,3 +12,4 @@ import fs from 'fs'
 console.log(sum(1,2))
 fun()
 print()
+console.log(fs)
