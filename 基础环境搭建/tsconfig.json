@@ -10,7 +10,8 @@
     "removeComments": true, // 编译后的文件移除掉注释
     "noImplicitUseStrict": true, // 编译后的文件不使用严格模式
     "esModuleInterop": true, // 启用es模块化交互非es模块化导出
-    "noEmitOnError": true, // 错误时不会生成编译后的文件 
+    "noEmitOnError": true, // 错误时不会生成编译后的文件
+    "moduleResolution": "node", // 设置解析模块的模式 一共两种：classic/node  
   },
   "include": ["./src"], // 指定需要编译的文件夹下所有ts文件
   // "files": ["./src/index.ts"] //单独编译一个文件

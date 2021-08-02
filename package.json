@@ -1,6 +1,6 @@
 {
 	"scripts": {
-		"dev": "nodemon --watch ./基础环境搭建/src -e ts --exec ts-node ./基础环境搭建/src/模块化/index.ts"
+		"dev": "nodemon --watch ./基础环境搭建/src -e ts --exec ts-node ./基础环境搭建/src/模块化/Poker/index.ts"
 	},
 	"dependencies": {
 		"@types/node": "^16.4.3"

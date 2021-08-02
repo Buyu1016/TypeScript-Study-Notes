@@ -13,3 +13,8 @@ console.log(sum(1,2))
 fun()
 print()
 console.log(fs)
+
+// 在TS中使用CommonJs
+// 引入方式:
+import obj = require('./moduleComminJsOne')
+console.log(obj.sum(1,2)) 
