@@ -63,3 +63,18 @@ const demo6:F = {
 // 在继承方面：interface和type的区别
 //  1: interface禁止更改父级的约束条件
 //  2: type后续对父级的约束条件进行更改时，之后增加那个属性的约束条件，并不会覆盖 
+
+// 修饰符
+// readonly     只读修饰符
+interface User5 {
+    readonly id: string,
+    name: string,
+    age?: number
+}
+let myMessage: User5 = {
+    id: '001',
+    name: 'CodeGorgeous'
+}
+// myMessage.id = '002' // 报错，id为只读属性
+
+let arr1: readonly number[] = [1,2,3,4,5]
