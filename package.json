@@ -1,8 +1,0 @@
-{
-	"scripts": {
-		"dev": "nodemon --watch ./基础环境搭建/src -e ts --exec ts-node ./基础环境搭建/src/类/index.ts"
-	},
-	"dependencies": {
-		"@types/node": "^16.4.3"
-	}
-}
