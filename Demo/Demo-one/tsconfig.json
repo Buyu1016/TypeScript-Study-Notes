@@ -3,7 +3,8 @@
     "target": "ES5", // 编译后的代码版本标准
     "module": "CommonJS", // 编译后的代码模块化标准
     "lib": ["ES7", "DOM"], // 默认情况下代码的环境配置
-    "outDir": "./dist"
+    "outDir": "./dist",
+    "strictNullChecks": true
   },
   "include": ["./src"],
   // "files": ["./src/index.ts"]
