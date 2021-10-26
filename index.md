@@ -1,4 +1,4 @@
-# (TypeScript)[https://www.typescriptlang.org/]
+# [TypeScript](https://www.typescriptlang.org/)
 
 ## 优势
 
@@ -8,7 +8,7 @@
 
 ## 环境搭建
 
-1. npm i (typescript)[https://www.npmjs.com/package/typescript] -g
+1. npm i [typescript](https://www.npmjs.com/package/typescript) -g
 2. 使用命令行tsc 文件名进行编译
 
 ## 配置
@@ -35,6 +35,18 @@
             - strictNullChecks
                 - Boolean
                 - 是否开启更加严格的空类型检查
+            - removeComments
+                - Boolean
+                - 是否编译时保留注释
+            - esModuleInterop
+                - Boolean
+                - 是否启用es模块化交互非es模块导出
+            - noEmitOnError
+                - Boolean
+                - ts代码有误的情况下是否取消编译, 并继续编译正确代码
+            - noImplicitUseStrict
+                - Boolean
+                - 编译后的代码是否自动增添```"use strict"```
     - include
         - String[]
         - 配置需要编译的文件夹
@@ -42,19 +54,19 @@
         - String[]
         - 单独配置需要编译的文件
 - 第三方库
-    - (ts-node)[https://www.npmjs.com/package/ts-node]
+    - [ts-node](https://www.npmjs.com/package/ts-node)
         - 直接将ts代码在内存中完成编译并完成运行
         - 命令 ts-node 文件路径
-    - (nodemon)[https://www.npmjs.com/package/nodemon]
+    - [nodemon](https://www.npmjs.com/package/nodemon)
         - 监测文件变化
         - 命令 nodemon --watch ./src -e ts --exec ts-node ./src/index.ts
             - 此段命令意为当src文件夹下文件且文件后缀名为ts发生变化时运行ts-node ./src/index.ts该命令
+    - [@types/node](https://www.npmjs.com/package/@types/node)
+        - 用于向代码环境中增添node环境
 
-## Ts基本知识
+## 类型约束
 
-### 类型约束
-
-#### 可以用于约束变量、函数参数、函数返回等
+### 可以用于约束变量、函数参数、函数返回等
 
 - 所有类型约束
     - : string
@@ -286,3 +298,19 @@
 
     console.log(Level)
 ```
+
+## Ts中的模块化
+
+### 在Ts中使用模块化和正常使用模块化一致, **注意: 导入的文件名不要带上后缀名.ts, 否则会报错**, 使用Es6模块化标准或者CommonJs标准都可以, 可以通过配置**module**来控制编译后js文件使用的模块化标准
+
+- ### 模块解析策略(此处不详细解释, 详情请[点击这里](https://blog.csdn.net/yivisir/article/details/115575394))
+    - classic: 经典解析策略
+    - node: node解析策略
+
+- ### 注意事项
+    - 像是nodejs自带的库使用的是CommonJs模块化标准, 在ts使用后编译结果可能会有意外的错误, 建议这样导入```import * as fs from 'fs'```, 而不是```import fs from 'fs'```这样导入, 如果一定要这样导入, 那么需要配置esModuleInterop
+    - 如果想要在ts中书写commonJs模块化的代码具有类型检查, 则需要这样导出```export = {导出的内容}```, 这样导入```import 变量 = require(文件路径)```
+    - **尽量使用Es6模块化标准进行书写TypeScript**
+
+## 接口
+

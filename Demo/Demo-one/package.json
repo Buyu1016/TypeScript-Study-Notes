@@ -1,0 +1,15 @@
+{
+    "name": "demo-one",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+        "start": "nodemon --watch ./src -e ts --exec ts-node ./src/index.ts",
+        "dev": "tsc"
+    },
+    "author": "",
+    "license": "ISC",
+    "dependencies": {
+        "@types/node": "^16.11.6"
+    }
+}
