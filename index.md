@@ -167,6 +167,28 @@
     }
 ```
 
+### 类型别名可实现类似于接口继承的效果, 使用``&```关键字进行链接, 这种称之为交叉类型
+
+```ts
+    type A = {
+        name: string
+    }
+
+    type B = {
+        age: number
+    }
+
+    type C = {
+        phone: string
+    } & A & B
+
+    const user: C = {
+        name: 'CodeGorgeous',
+        age: 21,
+        phone: "176xxxx0940"
+    }
+```
+
 ## 函数的约束
 
 ### 函数重载, 在函数实现前, 对于函数的多种情况进行声明
@@ -313,4 +335,121 @@
     - **尽量使用Es6模块化标准进行书写TypeScript**
 
 ## 接口
+
+### 用于约束类、对象、函数的标准, 使用关键字interface进行定义, **接口可以继承**, 当直接给对象字面量赋值, 会进行更加严格的判定
+
+```ts
+    interface User {
+        name: string,
+        age: number,
+        sex: 0 | 1,
+        print(callback: (n: number) => {}): void
+    }
+
+    // 在约束对象时建议使用接口进行约束
+    // type User = {
+    //     name: string,
+    //     age: number,
+    //     sex: 0 | 1
+    // }
+
+    let user1: User = {
+        name: 'maomao',
+        age: 18,
+        sex: 1,
+        print(callback) {
+            console.log(this)
+            const result = callback(1)
+        }
+    }
+
+    user1.print(demo)
+
+    function demo (a) {
+        console.log(a)
+        return a
+    }
+
+    // 接口继承
+    interface A {
+        name: string
+    }
+
+    interface B extends A {
+        age: number
+    }
+
+    interface C {
+        sex: 0 | 1
+    }
+
+    interface D extends A, C {
+        phone: string
+    }
+
+    const user2: B = {
+        name: 'CodeGorgeous',
+        age: 21
+    }
+
+    const user3: D = {
+        name: 'admin',
+        sex: 0,
+        phone: "176xxxx0940"
+    }
+    // 交叉类型
+    type A = {
+        name: string
+    }
+
+    type B = {
+        age: number
+    }
+
+    type C = {
+        age: boolean
+    } & A & B
+
+    // C: never
+    const user1:C = {
+        name: '1', // never类型
+        age: 1, // never类型
+    }
+
+```
+
+- ### 接口的继承和类型别名的交叉类型的区别:
+    - 子接口不能重复定义父接口的key的类型, 而交叉类型可以
+    - 交叉类型中重复定义某个key类型则会使得类型进行叠加(经实测, 不同类型不管怎么叠加最后都会成为never类型)
+
+## 类型兼容性
+
+### 
+
+## 类型断言
+
+### 当写代码时十分明确该数据的类型, 可以使用关键字as进行类型断言, ``` 数据 as 类型```
+
+## 修饰符
+
+- readonly
+    - 只读修饰符
+    - 不会在编译后显示
+    - **细节注意:** 当该修饰符出现在这种情况下```const arr1: readonly number[] = [1, 2, 3]```时, 表示的是该数组是无法进行任何改变的(不能进行push等等这种操作), 出现在这种情况下```const Demo {readonly arr1: number[]}```时, 表示该数组是可以进行改变的(能进行push这种操作), 但是两种情况都不能允许对数据的地址产生任何改变
+
+```ts
+    interface User {
+        readonly id: string,
+        name: string,
+        age: number,
+    }
+
+    const user1: User = {
+        id: '1',
+        name: 'maomao',
+        age: 18
+    }
+
+    // user1.id = '2'   // 无法分配到 "id" ，因为它是只读属性
+```
 
