@@ -47,6 +47,12 @@
             - noImplicitUseStrict
                 - Boolean
                 - 编译后的代码是否自动增添```"use strict"```
+            - moduleResolution
+                - String
+                - 配置模块解析策略
+            - strictPropertyInitialization
+                - Boolean
+                - 更加严格的检查类中的值是否初始化
     - include
         - String[]
         - 配置需要编译的文件夹
@@ -424,11 +430,158 @@
 
 ## 类型兼容性
 
-### 
+### 请在下面的代码中感受一下类型兼容性(鸭子辩型法)
+
+```ts
+    interface User {
+        name: string,
+        sex: '男' | '女'
+    }
+
+    // const user1:A = {name: 'admin', age: 10} // age: 10报错
+
+    let user2: User
+
+    const user3 = {
+        name: 'admin',
+        sex: '男' as '男', // 在这里可以进行类型断言
+        age: 20
+    }
+
+    user2 = user3 // 这种操作可以称之为类型兼容性, 也称之为鸭子辨型法
+```
 
 ## 类型断言
 
 ### 当写代码时十分明确该数据的类型, 可以使用关键字as进行类型断言, ``` 数据 as 类型```
+
+## 类
+
+### 在Ts中需要使用属性列表描述constructor内所创建的值
+
+```ts
+    class User {
+        name: string
+        private password: string
+        readonly pid?: string
+        sex: '男' | '女'
+        constructor(name: string, password: string, pid?: string, sex: '男' | '女' = '男') {
+            this.name = name
+            this.password = password
+            this.pid = pid
+            this.sex = sex
+        }
+        private print() {
+            console.log(this.password)
+        }
+    }
+
+    const user1 = new User('cg', '123123', '123541325132412')
+    // user1.pid = '2131254215123123' // 无法分配到 "pid" ，因为它是只读属性。
+    // user1.print() // 方法也可以私有化, 属性“print”为私有属性，只能在类“User”中访问。
+    console.log(user1) // 正常输出
+    // user1.password = '3514124312' // 属性“password”为私有属性，只能在类“User”中访问。
+```
+
+## 泛型
+
+### 附属于函数、类、接口、类型别名之上的类型称之为泛型
+
+```ts
+    // 函数中使用泛型
+    // <T>用于定义一个泛型
+    function mySplice<T>(arr: T[], i: number): T[] {
+        let result: T[] = []
+        result = arr.splice(0, i)
+        return result
+    }
+    // <number>相当于给<T>进行赋值, 此时T就代表number
+    const result = mySplice<number>([1,2,3,4,5,6], 3) // 这里result类型为number[]
+    // 这里省略赋值, Ts则会自动根据传递的参数进行类型推导
+    const result1 = mySplice([1,'2',true,8,5,[]], 3) // 这里推到为(string | number | boolean | never[])[]
+
+    // 在类型别名/接口中使用泛型
+
+    type A<T> = {
+        name: T,
+        id: T
+    }
+
+
+    type B<T> = (a: T, b: number) => boolean
+
+    interface C<T> {
+        (a: T, b: number): boolean
+    }
+
+    function myFilter<T>(arr: T[], callback: C<T>): T[] {
+        const result: T[] = []
+        arr.forEach((item, index) => {
+            if (callback(item, index)) result.push(item)
+        })
+        return result
+    }
+
+    const result3 = myFilter<number>([1,2,3,4,5,6,7,8], (item, index) => item%2 === 0)
+
+    console.log(result3)
+
+    // 在类中使用泛型
+
+    class ArrayHelper<T> {
+        arr: T[]
+        constructor(arr: T[]) {
+            this.arr = arr
+        }
+        print(): T[] {
+            return this.arr
+        }
+        indexOf(val: any): number {
+            for (let i = 0; i < this.arr.length; i++) {
+                if (this.arr[i] === val) {
+                    return i
+                }
+            }
+            return -1
+        }
+        
+    }
+
+    const result4 = new ArrayHelper<number>([1,2,3,4,5])
+
+    console.log(result4.print()) // 这里就会明确输出的是一个number[]
+```
+
+## 访问器
+
+### 用于控制属性的读取(get)和赋值(set)
+
+```ts
+    class User {
+        name: string
+        constructor(name: string, private _age: number) {
+            this.name = name
+            this._age = _age
+        }
+        
+        public set age(v : number) {
+            console.log('开始赋值')
+            this._age = v;
+        }
+        
+        
+        public get age() : number {
+            console.log('开始读取')
+            return this._age
+        }
+        
+    }
+
+    const user1 = new User('cg', 21)
+
+    user1.age = 22
+    console.log(user1) // User { _age: 22, name: 'cg' }
+```
 
 ## 修饰符
 
@@ -453,3 +606,31 @@
     // user1.id = '2'   // 无法分配到 "id" ，因为它是只读属性
 ```
 
+- public/private
+    - 访问修饰符
+    - 控制类中某个成员的访问权限
+    - public 公开的权限, private 私有的权限, 只能够在类中进行
+    - 不会在编译后显示
+```ts
+    class User {
+        name: string
+        private password: string
+        readonly pid?: string
+        sex: '男' | '女'
+        constructor(name: string, password: string, pid?: string, sex: '男' | '女' = '男') {
+            this.name = name
+            this.password = password
+            this.pid = pid
+            this.sex = sex
+        }
+        private print() {
+            console.log(this.password)
+        }
+    }
+
+    const user1 = new User('cg', '123123', '123541325132412')
+    // user1.pid = '2131254215123123' // 无法分配到 "pid" ，因为它是只读属性。
+    // user1.print() // 方法也可以私有化, 属性“print”为私有属性，只能在类“User”中访问。
+    console.log(user1) // 正常输出
+    // user1.password = '3514124312' // 属性“password”为私有属性，只能在类“User”中访问。
+```

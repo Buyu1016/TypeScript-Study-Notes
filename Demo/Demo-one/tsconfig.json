@@ -8,7 +8,9 @@
     "removeComments": true,
     "esModuleInterop": true,
     "noEmitOnError": true,
-    "noImplicitUseStrict": false
+    "noImplicitUseStrict": false,
+    "moduleResolution": "Node",
+    "strictPropertyInitialization": true
   },
   "include": ["./src"],
   // "files": ["./src/index.ts"]
