@@ -552,6 +552,55 @@
     console.log(result4.print()) // 这里就会明确输出的是一个number[]
 ```
 
+### 泛型约束
+
+#### 使用关键字extends进行继承接口/类型别名的约束
+
+```ts
+
+type A = {
+    a: number,
+    b: number
+}
+
+interface B {
+    a: number,
+    b: number
+}
+
+// 使用关键字extends进行约束泛型, 可以继承接口、类型别名等
+function sum<T extends B> (obj: T): number {
+    return obj.a + obj.b;
+}
+
+const result = sum({
+    a: 1,
+    b: 2,
+    c: 3
+})
+
+console.log(result) // 3
+```
+
+### 多泛型
+
+```ts
+    function mixinArray<T, U>(arr1: T[], arr2: U[]): (T | U)[] {
+        let len = arr1.length
+        let result: (T | U)[] = []
+        if (arr1.length < arr2.length) len = arr2.length
+        for (let i = 0; i < len; i++) {
+            if (i < arr1.length) result.push(arr1[i])
+            if (i < arr2.length) result.push(arr2[i])
+        }
+        return result
+    }
+
+    const result = mixinArray<number, string>([1, 3, 5, 2, 9],['a', 'c', 'b'])
+
+    console.log(result)
+```
+
 ## 访问器
 
 ### 用于控制属性的读取(get)和赋值(set)
@@ -634,3 +683,84 @@
     console.log(user1) // 正常输出
     // user1.password = '3514124312' // 属性“password”为私有属性，只能在类“User”中访问。
 ```
+
+## 在React中使用Ts
+
+```ts
+// ***index.tsx***
+import Demo from '@/components/Demo'
+import React, { useState } from 'react'
+
+export default function IndexPage() {
+
+  const [Num, setNum] = useState(0)
+
+  return (
+    <div>
+      <h1>Hello React+Ts</h1>
+      <Demo
+        num={Num}
+        onChange={(val) => {
+          setNum(Num + val)
+        }}
+      />
+    </div>
+  );
+}
+
+// ***Demo/index.tsx***
+import React from 'react'
+import style from './index.less'
+
+interface Props {
+    num: number
+    onChange?: (val: number) => void
+}
+
+// 两种写法
+//  第一种
+// export default function index(props: Props) {
+//     return (
+//         <div>
+//             <button
+//                 className={style.button}
+//                 onClick={() => {
+//                     props.onChange && props.onChange(-1)
+//                 }}
+//             >-</button>
+//             <h1>{props.num}</h1>
+//             <button
+//                 className={style.button}
+//                 onClick={() => {
+//                     props.onChange && props.onChange(1)
+//                 }}
+//             >+</button>
+//         </div>
+//     )
+// }
+
+// 第二种
+
+const index: React.FC<Props> = (props) => {
+    return (
+        <div>
+            <button
+                className={style.button}
+                onClick={() => {
+                    props.onChange && props.onChange(-1)
+                }}
+            >-</button>
+            <h1>{props.num}</h1>
+            <button
+                className={style.button}
+                onClick={() => {
+                    props.onChange && props.onChange(1)
+                }}
+            >+</button>
+        </div>
+    )
+}
+
+export default index
+```
+
