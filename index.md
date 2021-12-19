@@ -102,7 +102,7 @@
     - : never
         - 一般用于约束函数永远不会结束
         - 例如: 死循环、抛出错误...
-    - : 字面量1
+    - : 字面量
         - 一般用于约束变量限定在某个值
         - 例如: let sex: "男" | "女";   这样sex就只能从男/女中取值
     - : [string, boolean, number]
@@ -455,6 +455,22 @@
 
 ### 当写代码时十分明确该数据的类型, 可以使用关键字as进行类型断言, ``` 数据 as 类型```
 
+```ts
+    interface User {
+        name: string
+        sex: '男' | '女'
+    }
+
+    let user1: User;
+
+    const user2 = {
+        name: 'John',
+        sex: '男' as '男'
+    }
+
+    user1 = user2;
+```
+
 ## 类
 
 ### 在Ts中需要使用属性列表描述constructor内所创建的值
@@ -682,85 +698,5 @@ console.log(result) // 3
     // user1.print() // 方法也可以私有化, 属性“print”为私有属性，只能在类“User”中访问。
     console.log(user1) // 正常输出
     // user1.password = '3514124312' // 属性“password”为私有属性，只能在类“User”中访问。
-```
-
-## 在React中使用Ts
-
-```ts
-// ***index.tsx***
-import Demo from '@/components/Demo'
-import React, { useState } from 'react'
-
-export default function IndexPage() {
-
-  const [Num, setNum] = useState(0)
-
-  return (
-    <div>
-      <h1>Hello React+Ts</h1>
-      <Demo
-        num={Num}
-        onChange={(val) => {
-          setNum(Num + val)
-        }}
-      />
-    </div>
-  );
-}
-
-// ***Demo/index.tsx***
-import React from 'react'
-import style from './index.less'
-
-interface Props {
-    num: number
-    onChange?: (val: number) => void
-}
-
-// 两种写法
-//  第一种
-// export default function index(props: Props) {
-//     return (
-//         <div>
-//             <button
-//                 className={style.button}
-//                 onClick={() => {
-//                     props.onChange && props.onChange(-1)
-//                 }}
-//             >-</button>
-//             <h1>{props.num}</h1>
-//             <button
-//                 className={style.button}
-//                 onClick={() => {
-//                     props.onChange && props.onChange(1)
-//                 }}
-//             >+</button>
-//         </div>
-//     )
-// }
-
-// 第二种
-
-const index: React.FC<Props> = (props) => {
-    return (
-        <div>
-            <button
-                className={style.button}
-                onClick={() => {
-                    props.onChange && props.onChange(-1)
-                }}
-            >-</button>
-            <h1>{props.num}</h1>
-            <button
-                className={style.button}
-                onClick={() => {
-                    props.onChange && props.onChange(1)
-                }}
-            >+</button>
-        </div>
-    )
-}
-
-export default index
 ```
 

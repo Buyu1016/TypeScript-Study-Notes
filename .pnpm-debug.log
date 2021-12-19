@@ -1,0 +1,14 @@
+{
+  "0 debug pnpm:scope": {
+    "selected": 1
+  },
+  "1 error pnpm": {
+    "code": "ERR_PNPM_NO_IMPORTER_MANIFEST_FOUND",
+    "err": {
+      "name": "Error",
+      "message": "No package.json (or package.yaml, or package.json5) was found in \"/Users/codegorgeous/Desktop/TypeScript-Study-Notes\".",
+      "code": "ERR_PNPM_NO_IMPORTER_MANIFEST_FOUND",
+      "stack": "Error: No package.json (or package.yaml, or package.json5) was found in \"/Users/codegorgeous/Desktop/TypeScript-Study-Notes\".\n    at readProjectManifest (/usr/local/lib/node_modules/pnpm/dist/pnpm.cjs:40241:13)\n    at async Object.readProjectManifestOnly (/usr/local/lib/node_modules/pnpm/dist/pnpm.cjs:40245:28)\n    at async Object.readProjectManifestOnly (/usr/local/lib/node_modules/pnpm/dist/pnpm.cjs:40464:24)\n    at async Object.handler (/usr/local/lib/node_modules/pnpm/dist/pnpm.cjs:121101:24)\n    at async /usr/local/lib/node_modules/pnpm/dist/pnpm.cjs:125161:20\n    at async run (/usr/local/lib/node_modules/pnpm/dist/pnpm.cjs:125136:34)\n    at async runPnpm (/usr/local/lib/node_modules/pnpm/dist/pnpm.cjs:125346:5)\n    at async /usr/local/lib/node_modules/pnpm/dist/pnpm.cjs:125338:7"
+    }
+  }
+}

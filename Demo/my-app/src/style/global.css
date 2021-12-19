@@ -1,0 +1,38 @@
+.game-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+}
+
+.game-title {
+    width: 100vw;
+    text-align: center;
+}
+
+.game-button-container {
+    width: 100vw;
+    text-align: center;
+}
+
+.checkerboard-container {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.piece-item {
+    width: 70px;
+    height: 70px;
+    border: 3px solid #aaa;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+
+.piece {
+    width: 90%;
+    height: 90%;
+    border-radius: 50%;
+}
