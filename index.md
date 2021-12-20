@@ -473,7 +473,7 @@
 
 ## 类
 
-### 在Ts中需要使用属性列表描述constructor内所创建的值
+在Ts中需要使用属性列表描述constructor内所创建的值
 
 ```ts
     class User {
@@ -498,6 +498,11 @@
     console.log(user1) // 正常输出
     // user1.password = '3514124312' // 属性“password”为私有属性，只能在类“User”中访问。
 ```
+
+- 单根性
+    - 每个类最多拥有一个父类
+- 传递性
+    - A extends B {}    C extends A {}  B也是C的父类
 
 ## 泛型
 
@@ -700,3 +705,28 @@ console.log(result) // 3
     // user1.password = '3514124312' // 属性“password”为私有属性，只能在类“User”中访问。
 ```
 
+- protected
+    - 访问修饰符
+    - 类中该成员只能在自身类或者子类中访问
+    - 不会在编译后显示 
+```ts
+    class User {
+        name: string
+        private password: string
+        readonly pid?: string
+        protected sex: '男' | '女'
+        constructor(name: string, password: string, pid?: string, sex: '男' | '女' = '男') {
+            this.name = name
+            this.password = password
+            this.pid = pid
+            this.sex = sex
+        }
+        private print() {
+            console.log(this.password)
+        }
+    }
+
+    const user = new User('cg', '123123', '123', '男');
+    // console.log(user.sex); // 报错: 属性“sex”受保护，只能在类“User”及其子类中访问。
+
+```
