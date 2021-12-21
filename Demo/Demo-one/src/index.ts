@@ -1,19 +1,49 @@
-class User {
-    name: string
-    private password: string
-    readonly pid?: string
-    protected sex: '男' | '女'
-    constructor(name: string, password: string, pid?: string, sex: '男' | '女' = '男') {
-        this.name = name
-        this.password = password
-        this.pid = pid
-        this.sex = sex
-    }
-    private print() {
-        console.log(this.password)
-    }
+interface LoginData {
+    state: string
+    msg: string
+    data: any
 }
 
-const user = new User('cg', '123123', '123', '男');
-// console.log(user.sex); // 报错: 属性“sex”受保护，只能在类“User”及其子类中访问。
+interface User {
+    userName: string
+    userPwd: string
+}
+
+class User {
+    private static users: User[] = [];
+
+    constructor(
+        public userName: string,
+        public userPwd: string
+    ) {
+        User.users.push({
+            userName,
+            userPwd
+        });
+    }
+    
+    static login(userName: string, userPwd: string): LoginData {
+        for (const iterator of this.users) { 
+            if (iterator.userName === userName && iterator.userPwd === userPwd) {
+                return {
+                    state: 'success',
+                    msg: '登陆成功',
+                    data: {}
+                }
+            }
+        }
+        return {
+            state: 'error',
+            msg: '登陆失败',
+            data: {}
+        }
+    }
+
+}
+
+const user1 = new User('maomao', '123456');
+console.log(User.login('cg', '123123'));
+console.log(User.login('maomao', '123456'));
+
+
 

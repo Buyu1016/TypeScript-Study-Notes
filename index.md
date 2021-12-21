@@ -503,6 +503,39 @@
     - 每个类最多拥有一个父类
 - 传递性
     - A extends B {}    C extends A {}  B也是C的父类
+- 抽象类
+    - 有时类只是一个非常抽象的一个单元, 该类不适合new对象只适合用做其他类的基类, 该类就称之为抽象类, 通过关键字**abstract**修饰该类定义为抽象类, 该关键字不会在编译后显示
+- 抽象成员/方法
+    - 抽象类内部需要定义某个成员可只知道成员的类型并不知道成员的值, 继承该抽象类的子类必须对该成员进行赋值, 那么在该抽象类中可以使用关键字**abstract **修饰该成员, **抽象成员是只能够出现在抽象类中**
+- 静态成员
+    - 用于附着在构造函数本体上的成员/方法而不是附着在实例上的成员/方法, 通过关键字**static**修饰该成员/方法即可
+
+```ts
+    abstract class People {
+        // 抽象成员
+        abstract name: string;
+        abstract breathing(): void
+        // 静态成员
+        static isPeople() {}
+    }
+    // const people = new People(); // 报错: 无法创建抽象类的实例
+
+    class Man extends People {
+        name = 'boy'
+        breathing() {
+            console.log('大口喘息~~~');
+        }
+    }
+    const man = new Man();
+
+    class Woman extends People {
+        name = 'girl'
+        breathing() {
+            console.log('缓缓呼吸~~~');
+        }
+    }
+    const woman = new Woman();
+```
 
 ## 泛型
 

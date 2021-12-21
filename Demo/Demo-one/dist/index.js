@@ -1,12 +1,30 @@
 class User {
-    constructor(name, password, pid, sex = '男') {
-        this.name = name;
-        this.password = password;
-        this.pid = pid;
-        this.sex = sex;
+    constructor(userName, userPwd) {
+        this.userName = userName;
+        this.userPwd = userPwd;
+        User.users.push({
+            userName,
+            userPwd
+        });
     }
-    print() {
-        console.log(this.password);
+    static login(userName, userPwd) {
+        for (const iterator of User.users) {
+            if (iterator.userName === userName && iterator.userPwd === userPwd) {
+                return {
+                    state: 'success',
+                    msg: '登陆成功',
+                    data: {}
+                };
+            }
+        }
+        return {
+            state: 'error',
+            msg: '登陆失败',
+            data: {}
+        };
     }
 }
-const user = new User('cg', '123123', '123', '男');
+User.users = [];
+const user1 = new User('maomao', '123456');
+console.log(User.login('cg', '123123'));
+console.log(User.login('maomao', '123456'));
