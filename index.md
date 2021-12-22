@@ -1,5 +1,7 @@
 # [TypeScript](https://www.typescriptlang.org/)
 
+[toc]
+
 ## 优势
 
 1. 静态
@@ -53,6 +55,12 @@
             - strictPropertyInitialization
                 - Boolean
                 - 更加严格的检查类中的值是否初始化
+            - noImplicitAny
+                - Boolean
+                - 开启对隐式any的检查
+            - noImplicitThis
+                - Boolean
+                - 开启对隐式this的检查
     - include
         - String[]
         - 配置需要编译的文件夹
@@ -72,7 +80,7 @@
 
 ## 类型约束
 
-### 可以用于约束变量、函数参数、函数返回等
+可以用于约束变量、函数参数、函数返回等
 
 - 所有类型约束
     - : string
@@ -139,7 +147,7 @@
 
 ## 类型别名
 
-### 对一直的一些类型定义为固定名称, 方便之后使用, 通过关键字type进行定义
+对一直的一些类型定义为固定名称, 方便之后使用, 通过关键字type进行定义
 
 ```ts
     // 定义一个类型别名
@@ -173,7 +181,7 @@
     }
 ```
 
-### 类型别名可实现类似于接口继承的效果, 使用``&```关键字进行链接, 这种称之为交叉类型
+类型别名可实现类似于接口继承的效果, 使用``&```关键字进行链接, 这种称之为交叉类型
 
 ```ts
     type A = {
@@ -197,7 +205,7 @@
 
 ## 函数的约束
 
-### 函数重载, 在函数实现前, 对于函数的多种情况进行声明
+函数重载, 在函数实现前, 对于函数的多种情况进行声明
 
 ```ts
     function merge(a: string, b: string): string
@@ -214,7 +222,7 @@
     merge("1", "2") // string
 ```
 
-### 可选参数, 选择个别参数
+可选参数, 选择个别参数
 
 ```ts
     /**
@@ -289,7 +297,7 @@
 
 ## 枚举
 
-### 用于约束值在某个范围的进行取得, 解决真实值与逻辑含义的混淆, 减少重复代码, 使用关键字enum定义枚举
+用于约束值在某个范围的进行取得, 解决真实值与逻辑含义的混淆, 减少重复代码, 使用关键字enum定义枚举
 
 - 枚举规则
     - enum xxx {key: value, key1: value1}
@@ -329,20 +337,22 @@
 
 ## Ts中的模块化
 
-### 在Ts中使用模块化和正常使用模块化一致, **注意: 导入的文件名不要带上后缀名.ts, 否则会报错**, 使用Es6模块化标准或者CommonJs标准都可以, 可以通过配置**module**来控制编译后js文件使用的模块化标准
+在Ts中使用模块化和正常使用模块化一致, **注意: 导入的文件名不要带上后缀名.ts, 否则会报错**, 使用Es6模块化标准或者CommonJs标准都可以, 可以通过配置**module**来控制编译后js文件使用的模块化标准
 
-- ### 模块解析策略(此处不详细解释, 详情请[点击这里](https://blog.csdn.net/yivisir/article/details/115575394))
+- 模块解析策略(此处不详细解释, 详情请[点击这里](https://blog.csdn.net/yivisir/article/details/115575394))
     - classic: 经典解析策略
     - node: node解析策略
 
-- ### 注意事项
+- 注意事项
     - 像是nodejs自带的库使用的是CommonJs模块化标准, 在ts使用后编译结果可能会有意外的错误, 建议这样导入```import * as fs from 'fs'```, 而不是```import fs from 'fs'```这样导入, 如果一定要这样导入, 那么需要配置esModuleInterop
     - 如果想要在ts中书写commonJs模块化的代码具有类型检查, 则需要这样导出```export = {导出的内容}```, 这样导入```import 变量 = require(文件路径)```
     - **尽量使用Es6模块化标准进行书写TypeScript**
 
 ## 接口
 
-### 用于约束类、对象、函数的标准, 使用关键字interface进行定义, **接口可以继承**, 当直接给对象字面量赋值, 会进行更加严格的判定
+用于约束类、对象、函数的标准, 使用关键字interface进行定义, **接口可以继承**, 当直接给对象字面量赋值, 会进行更加严格的判定
+
+接口与类型别名的区别: 接口可以继承类也可以被类所实现(通过关键字**implements**约束), 而类型别名不行
 
 ```ts
     interface User {
@@ -424,13 +434,44 @@
 
 ```
 
+接口既可以继承接口也同样可以继承类
+
+```ts
+    class A {
+        a: number = 1
+        b: number = 2
+    }
+
+    class B {
+        name: string = 'cg'
+        age: number = 21
+    }
+
+    interface C extends A, B {
+        sex: '男' | '女'
+    }
+
+    interface D extends C {
+        interest: string[]
+    }
+
+    const c: D = {
+        a: 1,
+        b: 2,
+        name: 'cg',
+        sex: '男',
+        age: 21,
+        interest: ['划水']
+    }
+```
+
 - ### 接口的继承和类型别名的交叉类型的区别:
     - 子接口不能重复定义父接口的key的类型, 而交叉类型可以
     - 交叉类型中重复定义某个key类型则会使得类型进行叠加(经实测, 不同类型不管怎么叠加最后都会成为never类型)
 
 ## 类型兼容性
 
-### 请在下面的代码中感受一下类型兼容性(鸭子辩型法)
+请在下面的代码中感受一下类型兼容性(鸭子辩型法)
 
 ```ts
     interface User {
@@ -453,7 +494,7 @@
 
 ## 类型断言
 
-### 当写代码时十分明确该数据的类型, 可以使用关键字as进行类型断言, ``` 数据 as 类型```
+当写代码时十分明确该数据的类型, 可以使用关键字as进行类型断言, ``` 数据 as 类型```
 
 ```ts
     interface User {
@@ -509,7 +550,6 @@
     - 抽象类内部需要定义某个成员可只知道成员的类型并不知道成员的值, 继承该抽象类的子类必须对该成员进行赋值, 那么在该抽象类中可以使用关键字**abstract **修饰该成员, **抽象成员是只能够出现在抽象类中**
 - 静态成员
     - 用于附着在构造函数本体上的成员/方法而不是附着在实例上的成员/方法, 通过关键字**static**修饰该成员/方法即可
-
 ```ts
     abstract class People {
         // 抽象成员
@@ -536,10 +576,114 @@
     }
     const woman = new Woman();
 ```
+- 类中实现接口
+    - 规定类中所必须的一些成员可通过实现接口, 通过关键字**implements**进行规范
+- 类型保护函数
+    - 在某些情况下需要对类进行进一步规范但是在使用时因为Ts是静态的不会在运行时存在, 所以无法通过```类实例 instanceof 接口```这种方式判别类实例是否存在某个方法, 这是就需要进行类型保护函数, 通过该函数对类实例进行类型交叉, 最后形成```类实例 & 接口```该类型
+    -   ```ts
+        import { FireShow } from "./inserfaces";
+
+        export abstract class Animal {
+            
+            abstract type: string;
+            abstract skill: string[];
+
+            constructor(
+                public name: string,
+                public age: number
+            ) {
+
+            }
+
+            abstract say(): void
+            // 训练项目
+            train(project: string): void {
+                if (this.skill.includes(project)) return
+                this.skill.push(project);
+            }
+        }
+
+        export class Dog extends Animal {
+            type = "🐶";
+            skill = ['捡球'];
+            say(): void{
+                console.log('汪汪汪!');
+            }
+        }
+
+        export class Monkey extends Animal {
+            type = "🐒";
+            skill: string[] = ['跳跃火圈'];
+            say(): void{
+                console.log('咿咿咿~');
+            }
+        }
+
+        export class Mouse extends Animal implements FireShow {
+            type = "🐭";
+            skill: string[] = ['倒立洗头'];
+            say() {
+                console.log('叽叽叽~');
+            }
+            dance():void {
+                console.log('老鼠开始跳舞了');
+            }
+        }
+
+        export class Tiger extends Animal {
+            type = "🐯";
+            skill: string[] = ['跳凳子'];
+            say() {
+                console.log('吼吼吼~!');
+            }
+        }
+
+        const animals: Animal[] = [
+            new Dog("狗一", 2),
+            new Dog("狗二", 1),
+            new Monkey("孙悟空", 9999),
+            new Mouse('舒克', 1),
+            new Tiger('虎一', 6)
+        ];
+
+        for (const iterator of animals) {
+            if (hasFireShow(iterator)) {
+                // 这里iterator变为Animal & FireShow
+                iterator.dance();        
+            }
+        }
+
+        // 类型保护函数
+        function hasFireShow(animal: object): animal is FireShow {
+            if ((animal as FireShow).dance) {
+                return true;
+            }
+            return false;
+        }
+        ```
+- 索引器
+    -  帮助在配置开启更加严格的any隐式的情况下能够通过在类中配置```[props: string]: any```使得类实例可以通过```实例[val]```进行动态的访问或更改, 可以同时存在多个索引器, 但索引器不能冲突或重复
+    -   ```ts
+        class User {
+            // 索引器
+            [val: string | number | symbol]: any
+
+            0 = "Hello";
+
+            constructor(
+                public name: string,
+                public age: number
+            ) {
+
+            }
+        }
+
+        const user = new User('cg', 21);
+        ```
 
 ## 泛型
 
-### 附属于函数、类、接口、类型别名之上的类型称之为泛型
+附属于函数、类、接口、类型别名之上的类型称之为泛型
 
 ```ts
     // 函数中使用泛型
@@ -606,9 +750,9 @@
     console.log(result4.print()) // 这里就会明确输出的是一个number[]
 ```
 
-### 泛型约束
+- 泛型约束
 
-#### 使用关键字extends进行继承接口/类型别名的约束
+使用关键字extends进行继承接口/类型别名的约束
 
 ```ts
 
@@ -636,7 +780,7 @@ const result = sum({
 console.log(result) // 3
 ```
 
-### 多泛型
+- 多泛型
 
 ```ts
     function mixinArray<T, U>(arr1: T[], arr2: U[]): (T | U)[] {
@@ -657,7 +801,7 @@ console.log(result) // 3
 
 ## 访问器
 
-### 用于控制属性的读取(get)和赋值(set)
+用于控制属性的读取(get)和赋值(set)
 
 ```ts
     class User {
@@ -762,4 +906,29 @@ console.log(result) // 3
     const user = new User('cg', '123123', '123', '男');
     // console.log(user.sex); // 报错: 属性“sex”受保护，只能在类“User”及其子类中访问。
 
+```
+
+## this的指向约束
+
+首先需要明白在Js中对于this指向的问题, this的指向是在调用的时候才会明确. 但是在一些情况下会带来问题, 这时候就需要对this对指向进行约束, 并在配置中开启**noImplicitThis**
+
+```ts
+    interface User {
+        name: string
+        age: number
+        print(this: User, msg: string): void
+    }
+
+    const user: User = {
+        name: 'cg',
+        age: 21,
+        print(msg: string) {
+            console.log(this.name, this.age, msg);
+        }
+    }
+
+    function print1(this: any, msg: string): boolean {
+        console.log(this.name, this.age, msg);
+        return true;
+    }
 ```

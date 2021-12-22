@@ -10,7 +10,9 @@
     "noEmitOnError": true,
     "noImplicitUseStrict": false,
     "moduleResolution": "Node",
-    "strictPropertyInitialization": true
+    "strictPropertyInitialization": true,
+    "noImplicitAny": true,
+    "noImplicitThis": true
   },
   "include": ["./src"],
   // "files": ["./src/index.ts"]

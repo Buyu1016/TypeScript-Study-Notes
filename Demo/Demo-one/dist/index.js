@@ -8,7 +8,7 @@ class User {
         });
     }
     static login(userName, userPwd) {
-        for (const iterator of User.users) {
+        for (const iterator of this.users) {
             if (iterator.userName === userName && iterator.userPwd === userPwd) {
                 return {
                     state: 'success',
@@ -28,3 +28,7 @@ User.users = [];
 const user1 = new User('maomao', '123456');
 console.log(User.login('cg', '123123'));
 console.log(User.login('maomao', '123456'));
+const str = 'CodeGorgeous';
+const base64_str = window.btoa(str);
+const str_base64 = window.atob(base64_str);
+console.log(`字符串: ${str}, base64加密字符串: ${base64_str}, base64解密字符串: ${str_base64}`);
