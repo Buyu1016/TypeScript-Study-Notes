@@ -11,6 +11,7 @@
     "author": "",
     "license": "ISC",
     "devDependencies": {
+        "@types/jquery": "^3.5.11",
         "clean-webpack-plugin": "^4.0.0",
         "html-webpack-plugin": "4",
         "ts-loader": "8.3.0",

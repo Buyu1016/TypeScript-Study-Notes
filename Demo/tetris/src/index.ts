@@ -1,20 +1,15 @@
 import Square from "./cors/Square";
 import SquareExhibition from "./cors/SquareExhibition";
+import $ from 'jquery';
+import { operation } from './cors/utils/index'
 
 const square = new Square({
     x: 0,
     y: 0
-}, 'red');
-square.view = new SquareExhibition(square);
+}, '#abcdef');
+square.view = new SquareExhibition(square, $(".root"));
 square.point = {
-    x: 1,
-    y: 2
+    x: 1, 
+    y: 0
 }
-square.point = {
-    x: 2,
-    y: 5
-}
-square.point = {
-    x: 7,
-    y: 10
-}
+operation(square);
