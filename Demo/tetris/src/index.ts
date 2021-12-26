@@ -1,15 +1,26 @@
-import Square from "./cors/Square";
-import SquareExhibition from "./cors/SquareExhibition";
-import $ from 'jquery';
-import { operation } from './cors/utils/index'
+import SquareGroup from "./cors/SquareGroup";
+import $ from "jquery";
+import randomTetris from "./cors/tetris.config"
 
-const square = new Square({
-    x: 0,
-    y: 0
-}, '#abcdef');
-square.view = new SquareExhibition(square, $(".root"));
-square.point = {
-    x: 1, 
-    y: 0
-}
-operation(square);
+const squareGroup = randomTetris({
+    x: 4,
+    y: 6 
+});
+
+squareGroup.show();
+
+$(".btn-show").click(() => {
+    squareGroup.show();
+})
+
+$(".btn-down").click(() => {
+    squareGroup.squareCore = {
+        x: squareGroup.squareCore.x,
+        y: squareGroup.squareCore.y + 1
+    }
+}); 
+
+$(".btn-remove").click(() => {
+    squareGroup.hide();
+})
+

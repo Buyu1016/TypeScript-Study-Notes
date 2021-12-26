@@ -7,3 +7,5 @@ export interface IViews {
     show(): void
     hide(): void
 }
+
+export type IPoints = IPoint[]

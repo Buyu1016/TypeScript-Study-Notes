@@ -1,7 +1,7 @@
-import { IViews } from "../interfaces";
-import Square from '../Square/index';
+import { IViews } from "../../interfaces";
+import Square from '../../Square/index';
 import $ from 'jquery';
-import Options from '../config'
+import Options from '../../config'
 
 export default class SquareExhibition implements IViews {
 
