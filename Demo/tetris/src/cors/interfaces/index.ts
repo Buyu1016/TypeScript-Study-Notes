@@ -8,4 +8,11 @@ export interface IViews {
     hide(): void
 }
 
-export type IPoints = IPoint[]
+export type IPoints = IPoint[];
+
+export enum SquareDirection {
+    left,
+    right,
+    down,
+    up
+}

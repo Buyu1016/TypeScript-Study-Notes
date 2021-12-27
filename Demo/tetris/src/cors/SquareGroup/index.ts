@@ -2,6 +2,7 @@ import Square from "../Square";
 import { IPoint, IViews, IPoints } from "../interfaces"
 import SquareExhibition from "../view/SquareExhibition";
 import $ from "jquery";
+import GameRules from "../GameRules";
 
 /**
  * 方块组合类
@@ -39,6 +40,10 @@ export default class SquareGroup implements IViews {
                 y: this._shape[i].y + this._squareCore.y
             }
         }
+    }
+    
+    public get shape() : IPoints {
+        return this._shape;
     }
 
     show(container: JQuery<HTMLElement> = $(".root")): void {

@@ -3,6 +3,10 @@ const Options = {
         width: 30,
         height: 30,
         borderColor: 'red'
+    },
+    GameConfig: {
+        width: 20,
+        height: 20
     }
 };
 

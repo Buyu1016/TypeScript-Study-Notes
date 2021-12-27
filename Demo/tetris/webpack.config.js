@@ -18,8 +18,14 @@ module.exports = {
         extensions: [".ts", ".js"]
     },
     module: {
-        rules: [
-            { test: /\.tsx?$/, loader: "ts-loader" }
-        ]
+        rules: [{
+            test: /\.tsx?$/,
+            use: [{
+                loader: "ts-loader",
+                options: {
+                    transpileOnly: true
+                }
+            }]
+        }]
     }
 }
