@@ -1,3 +1,5 @@
+import SquareGroup from "../SquareGroup";
+
 export interface IPoint {
     x: number
     y: number
@@ -15,4 +17,16 @@ export enum SquareDirection {
     right,
     down,
     up
+}
+
+export enum GameState {
+    notPlay,
+    playing,
+    pause,
+    end
+}
+
+export interface IGameViews {
+    showNext(tetris: SquareGroup): void
+    switch(tetris: SquareGroup): void
 }

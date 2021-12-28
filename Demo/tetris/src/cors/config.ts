@@ -7,6 +7,10 @@ const Options = {
     GameConfig: {
         width: 20,
         height: 20
+    },
+    WaitConfig: {
+        width: 4,
+        height: 4
     }
 };
 

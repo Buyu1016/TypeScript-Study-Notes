@@ -46,7 +46,12 @@ export default class SquareGroup implements IViews {
         return this._shape;
     }
 
-    show(container: JQuery<HTMLElement> = $(".root")): void {
+    private set shape(v: IPoints) {
+        this._shape = v;
+        this.squareCore = this.squareCore;
+    }
+
+    show(container: JQuery<HTMLElement> = $(".main")): void {
         for (let i = 0; i < this._squares.length; i++) {
             if (this._squares[i].view) return;
             this._squares[i].view = new SquareExhibition(this._squares[i], container);
@@ -57,12 +62,46 @@ export default class SquareGroup implements IViews {
         }
     }
 
-    hide(): void {
+    hide(container: JQuery<HTMLElement> = $(".main")): void {
         for (const square of this._squares) {
             if (square.view) {
                 square.view.hide();
-                square.view = undefined;
+                square.view = new SquareExhibition(square, container);
             }
         }
     }
+
+    protected rotateDirection: boolean = true;
+
+    /**
+     * 获取方块组合旋转后的shape
+     * @returns 
+     */
+    private getRotateShape(): IPoints {
+        if (this.rotateDirection) {
+            // 顺时针旋转
+            return this._shape.map(item => {
+                return {
+                    x: - item.y,
+                    y: item.x
+                }
+            })
+        } else {
+            // 逆时针旋转
+            return this._shape.map(item => {
+                return {
+                    x: item.y,
+                    y: - item.x
+                }
+            })
+        }
+    }
+
+    rotateSquare(): void {
+        const result = this.getRotateShape();
+        if (GameRules.ifMove(result, this._squareCore)) {
+            this.shape = result;
+        }
+    }
+
 }

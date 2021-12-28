@@ -74,13 +74,6 @@ export default abstract class GameRules {
         }
         return false;
     }
-    static continuedMove(squareGroup: SquareGroup, targetDirection: SquareDirection): void {
-        const timer = setInterval(() => {
-            console.log("移动");
-            const result: boolean = this.move(squareGroup, targetDirection);
-            if (!result) clearInterval(timer);
-        }, 500)
-    }
 }
 
 // 类型保护函数
