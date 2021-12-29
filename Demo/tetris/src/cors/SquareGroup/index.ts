@@ -10,7 +10,7 @@ import GameRules from "../GameRules";
  */
 export default class SquareGroup implements IViews {
 
-    private _squares: readonly Square[];
+    private _squares: Square[];
 
     constructor(
         private _shape: IPoints,
@@ -50,6 +50,12 @@ export default class SquareGroup implements IViews {
         this._shape = v;
         this.squareCore = this.squareCore;
     }
+
+    
+    public get squares() : Square[] {
+        return this._squares;
+    }
+    
 
     show(container: JQuery<HTMLElement> = $(".main")): void {
         for (let i = 0; i < this._squares.length; i++) {
