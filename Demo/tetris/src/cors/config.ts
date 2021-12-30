@@ -9,7 +9,7 @@ const Options = {
         height: 20
     },
     WaitConfig: {
-        width: 4,
+        width: 5,
         height: 4
     }
 };

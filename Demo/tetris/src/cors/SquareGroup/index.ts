@@ -103,9 +103,9 @@ export default class SquareGroup implements IViews {
         }
     }
 
-    rotateSquare(): void {
+    rotateSquare(squares: Square[] = []): void {
         const result = this.getRotateShape();
-        if (GameRules.ifMove(result, this._squareCore)) {
+        if (GameRules.ifMove(result, this._squareCore, squares)) {
             this.shape = result;
         }
     }

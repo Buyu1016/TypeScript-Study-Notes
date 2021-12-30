@@ -1,6 +1,7 @@
 import { IPoint, IPoints } from "./interfaces";
 import { getRandom } from "./utils/index";
 import SquareGroup from "./SquareGroup";
+import Square from "./Square";
 
 /**
  *  O
@@ -72,8 +73,8 @@ class ShapeFour extends SquareGroup {
         );
     }
 
-    rotateSquare(): void {
-        super.rotateSquare();
+    rotateSquare(squares: Square[] = []): void {
+        super.rotateSquare(squares);
         this.rotateDirection = !this.rotateDirection;
     }
 }
@@ -113,8 +114,8 @@ class ShapeSix extends SquareGroup {
         );
     }
 
-    rotateSquare(): void {
-        super.rotateSquare();
+    rotateSquare(squares: Square[] = []): void {
+        super.rotateSquare(squares);
         this.rotateDirection = !this.rotateDirection;
     }
 }
@@ -134,8 +135,8 @@ class ShapeSeven extends SquareGroup {
         );
     }
     
-    rotateSquare(): void {
-        super.rotateSquare();
+    rotateSquare(squares: Square[] = []): void {
+        super.rotateSquare(squares);
         this.rotateDirection = !this.rotateDirection;
     }
 }
@@ -160,7 +161,7 @@ class ShapeEight extends SquareGroup {
 }
 
 
-const shapeArray = [ShapeOne, ShapeTwo, ShapeThree, ShapeFour, ShapeFive, ShapeSix, ShapeSeven, ShapeEight];
+const shapeArray: (typeof ShapeOne)[] = [ShapeOne, ShapeTwo, ShapeThree, ShapeFour, ShapeFive, ShapeSix, ShapeSeven, ShapeEight];
 
 /**
  * 随机返回一个俄罗斯方块

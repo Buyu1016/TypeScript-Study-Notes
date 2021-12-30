@@ -18,14 +18,26 @@
             background: black;
         }
         
+        .tip {
+            width: 200px;
+            height: 600px;
+            border: 1px solid black;
+        }
+        
         .wait {
             position: relative;
             left: 10px;
             top: 10px;
-            width: 120px;
+            width: 150px;
             height: 120px;
-            border: 1px solid black;
-            background: #aaa;
+        }
+        
+        .score-container {
+            height: 180px;
+        }
+        
+        h2 {
+            text-align: center;
         }
     </style>
 </head>
@@ -33,7 +45,17 @@
 <body>
     <div class="root">
         <div class="main"></div>
-        <div class="wait"></div>
+        <div class="tip">
+            <div class="wait"></div>
+            <div class="score-container">
+                <h2>当前得分</h2>
+                <span class="score"></span>
+            </div>
+            <div class="difficulty-container">
+                <h2>当前难度</h2>
+                <span class="difficulty"></span>
+            </div>
+        </div>
     </div>
     <button class="btn-remove">移除</button>
     <button class="btn-show">显示</button>
