@@ -9,5 +9,10 @@ export default class GameExhibition implements IGameViews {
     switch(tetris: SquareGroup): void {
         tetris.hide($(".main"));
     }
-    
+    showScore(text: number) {
+        $(".score").text(text);
+    }
+    showDifficulty(text: string) {
+        $(".difficulty").text(text);
+    }
 }

@@ -1,5 +1,5 @@
 import SquareGroup from "../SquareGroup";
-import { GameState, SquareDirection, IGameViews, IPoint } from "../interfaces";
+import { GameState, SquareDirection, IGameViews, DifficultyArr } from "../interfaces";
 import randomTetris from "../tetris.config";
 import GameRules from "../GameRules";
 import Options from "../config";
@@ -12,7 +12,7 @@ export default class Game {
     private _currentSquare?: SquareGroup;
     private _nextSquare: SquareGroup = randomTetris({x: 0, y: 0});
     private _timer?: number;
-    private _time: number = 200;
+    private _time: DifficultyArr = DifficultyArr.level1;
     private _squares: Square[] = [];
     private _score: number = 0;
 
@@ -22,6 +22,8 @@ export default class Game {
         _gameView.showNext(this._nextSquare);
         this.againGetPoint(Options.WaitConfig.width, this._nextSquare);
         this.operationSquare();
+        _gameView.showScore(this._score);
+        _gameView.showDifficulty(DifficultyArr[this._time]);
     }
     
     public get nextSquare() : SquareGroup {
@@ -32,12 +34,42 @@ export default class Game {
         return this._currentSquare;
     }
 
-    start(): void {
-        if (this._gameState !== GameState.playing) {
-            this._gameState = GameState.playing;
-            if (!this._currentSquare) this.replaceSquare();
-            this.timingMove();
+    private set score(v: number) {
+        this._score = v;
+        const scoreDifficulty = {
+            level1: 2,
+            level2: 5,
+            level3: 10,
+            level4: 20,
+            level5: 50,
         }
+        if (this._score >= scoreDifficulty.level5) {
+            this.difficulty = DifficultyArr.level5
+        } else if (this._score >= scoreDifficulty.level4) {
+            this.difficulty = DifficultyArr.level4
+        } else if (this._score >= scoreDifficulty.level3) {
+            this.difficulty = DifficultyArr.level3
+        } else if (this._score >= scoreDifficulty.level2) {
+            this.difficulty = DifficultyArr.level2
+        } else {
+            this.difficulty = DifficultyArr.level1            
+        }
+        this._gameView.showScore(this._score);
+    }
+
+    private set difficulty(v: DifficultyArr) {
+        this._time = v;
+        this._gameView.showDifficulty(DifficultyArr[this._time]);
+    }
+
+    start(): void {
+        if (this._gameState === GameState.playing) return;
+        if (this._gameState === GameState.end) {
+            this.clearGame();
+        }
+        this._gameState = GameState.playing;
+        if (!this._currentSquare) this.replaceSquare();
+        this.timingMove();
     }
     
     pause(): void {
@@ -50,22 +82,24 @@ export default class Game {
 
     private replaceSquare() {
         this._currentSquare = this._nextSquare;
+        this._currentSquare.squares.forEach(it => {
+            it.view?.hide();
+        })
         this.againGetPoint(Options.GameConfig.width, this._currentSquare);
         if(!this.determineEnd()) {
             this._gameState = GameState.end;
             clearInterval(this._timer);
             this._timer = undefined;
+            return;
         }
-            this._nextSquare = randomTetris({x: 0, y: 0});
-            this.againGetPoint(Options.WaitConfig.width, this._nextSquare);
-            this._gameView.switch(this._currentSquare);
-            this._gameView.showNext(this._nextSquare);
-        
+        this._nextSquare = randomTetris({x: 0, y: 0});
+        this.againGetPoint(Options.WaitConfig.width, this._nextSquare);
+        this._gameView.switch(this._currentSquare);
+        this._gameView.showNext(this._nextSquare);
     }
     
     private timingMove(targetDirection: SquareDirection = SquareDirection.down) {
         this._timer = (setInterval(() => {
-            console.log("定时器正在执行");
             if (this._currentSquare) {
                 const result = GameRules.move(this._currentSquare, targetDirection, this._squares);
                 if (!result) {
@@ -165,6 +199,7 @@ export default class Game {
                 }
             }
         })
+        this.score = this._score + 1;
     }
 
     private determineEnd() {
@@ -173,14 +208,16 @@ export default class Game {
     }
 
     private clearGame() {
-        if (this._gameState === GameState.playing) {
-            this._gameState = GameState.end;
-        }
         for (const square of this._squares) {
             square.view?.hide();
         }
         this._squares = [];
         this._score = 0;
-        clearInterval(this._timer);
+        this._nextSquare = randomTetris({x: 0, y: 0});
+        this.againGetPoint(Options.WaitConfig.width, this._nextSquare);
+        this._gameView.showNext(this._nextSquare);
+        this._currentSquare = undefined;
+        this.difficulty = DifficultyArr.level1;
     }
+
 }
