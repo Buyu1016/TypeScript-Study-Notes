@@ -24,6 +24,7 @@ export default class Game {
         this.operationSquare();
         _gameView.showScore(this._score);
         _gameView.showDifficulty(DifficultyArr[this._time]);
+        _gameView.init(this);
     }
     
     public get nextSquare() : SquareGroup {
@@ -52,7 +53,7 @@ export default class Game {
         } else if (this._score >= scoreDifficulty.level2) {
             this.difficulty = DifficultyArr.level2
         } else {
-            this.difficulty = DifficultyArr.level1            
+            this.difficulty = DifficultyArr.level5          
         }
         this._gameView.showScore(this._score);
     }
@@ -62,19 +63,28 @@ export default class Game {
         this._gameView.showDifficulty(DifficultyArr[this._time]);
     }
 
+    public get gameState(): GameState {
+        return this._gameState;
+    }
+
+    private set gameState(state: GameState) {
+        this._gameState = state;
+        this._gameView.showGameState(this._gameState);
+    }
+
     start(): void {
-        if (this._gameState === GameState.playing) return;
-        if (this._gameState === GameState.end) {
+        if (this.gameState === GameState.playing) return;
+        if (this.gameState === GameState.end) {
             this.clearGame();
         }
-        this._gameState = GameState.playing;
+        this.gameState = GameState.playing;
         if (!this._currentSquare) this.replaceSquare();
         this.timingMove();
     }
     
     pause(): void {
-        if (this._gameState === GameState.playing) {
-            this._gameState = GameState.pause;
+        if (this.gameState === GameState.playing) {
+            this.gameState = GameState.pause;
             clearInterval(this._timer);
             this._timer = undefined;
         }
@@ -87,7 +97,7 @@ export default class Game {
         })
         this.againGetPoint(Options.GameConfig.width, this._currentSquare);
         if(!this.determineEnd()) {
-            this._gameState = GameState.end;
+            this.gameState = GameState.end;
             clearInterval(this._timer);
             this._timer = undefined;
             return;
@@ -130,7 +140,7 @@ export default class Game {
                 pause: 32,
                 rotate: 82
             }
-            if (this._gameState !== GameState.playing) {
+            if (this.gameState !== GameState.playing) {
                 this.start();
                 return;
             }
@@ -160,7 +170,7 @@ export default class Game {
         };
         this.decisionEliminate();
         this.replaceSquare();
-        if (this._gameState === GameState.playing) {
+        if (this.gameState === GameState.playing) {
             this.timingMove();
         }
     }

@@ -5,7 +5,7 @@ const Options = {
         borderColor: 'red'
     },
     GameConfig: {
-        width: 20,
+        width: 16,
         height: 20
     },
     WaitConfig: {

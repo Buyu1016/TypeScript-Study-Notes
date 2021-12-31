@@ -1,3 +1,4 @@
+import Game from "../Game";
 import SquareGroup from "../SquareGroup";
 
 export interface IPoint {
@@ -31,6 +32,8 @@ export interface IGameViews {
     switch(tetris: SquareGroup): void
     showScore(text: number): void
     showDifficulty(text: string): void
+    init(game: Game): void
+    showGameState(gameState: GameState): void
 }
 
 export enum DifficultyArr {

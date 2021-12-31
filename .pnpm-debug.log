@@ -1,14 +1,15 @@
 {
-  "0 debug pnpm:scope": {
+  "0 info pnpm:global": "Nothing to stop. No server is running for the store at /Users/codegorgeous/.pnpm-store/v3",
+  "1 debug pnpm:scope": {
     "selected": 1
   },
-  "1 error pnpm": {
-    "code": "ERR_PNPM_NO_IMPORTER_MANIFEST_FOUND",
+  "2 error pnpm": {
+    "code": "ERR_PNPM_REGISTRIES_MISMATCH",
     "err": {
       "name": "Error",
-      "message": "No package.json (or package.yaml, or package.json5) was found in \"/Users/codegorgeous/Desktop/TypeScript-Study-Notes\".",
-      "code": "ERR_PNPM_NO_IMPORTER_MANIFEST_FOUND",
-      "stack": "Error: No package.json (or package.yaml, or package.json5) was found in \"/Users/codegorgeous/Desktop/TypeScript-Study-Notes\".\n    at readProjectManifest (/usr/local/lib/node_modules/pnpm/dist/pnpm.cjs:40241:13)\n    at async Object.readProjectManifestOnly (/usr/local/lib/node_modules/pnpm/dist/pnpm.cjs:40245:28)\n    at async Object.readProjectManifestOnly (/usr/local/lib/node_modules/pnpm/dist/pnpm.cjs:40464:24)\n    at async Object.handler (/usr/local/lib/node_modules/pnpm/dist/pnpm.cjs:121101:24)\n    at async /usr/local/lib/node_modules/pnpm/dist/pnpm.cjs:125161:20\n    at async run (/usr/local/lib/node_modules/pnpm/dist/pnpm.cjs:125136:34)\n    at async runPnpm (/usr/local/lib/node_modules/pnpm/dist/pnpm.cjs:125346:5)\n    at async /usr/local/lib/node_modules/pnpm/dist/pnpm.cjs:125338:7"
+      "message": "This modules directory was created using the following registries configuration: {\"default\":\"https://registry.npmjs.org/\"}. The current configuration is {\"default\":\"https://registry.npm.taobao.org/\"}. To recreate the modules directory using the new settings, run \"pnpm install\".",
+      "code": "ERR_PNPM_REGISTRIES_MISMATCH",
+      "stack": "Error: This modules directory was created using the following registries configuration: {\"default\":\"https://registry.npmjs.org/\"}. The current configuration is {\"default\":\"https://registry.npm.taobao.org/\"}. To recreate the modules directory using the new settings, run \"pnpm install\".\n    at validateModules (/usr/local/lib/node_modules/pnpm/dist/pnpm.cjs:90681:15)\n    at async Object.getContext [as default] (/usr/local/lib/node_modules/pnpm/dist/pnpm.cjs:90553:28)\n    at async Object.mutateModules (/usr/local/lib/node_modules/pnpm/dist/pnpm.cjs:113065:19)\n    at async Object.handler [as default] (/usr/local/lib/node_modules/pnpm/dist/pnpm.cjs:115978:35)\n    at async /usr/local/lib/node_modules/pnpm/dist/pnpm.cjs:125161:20\n    at async run (/usr/local/lib/node_modules/pnpm/dist/pnpm.cjs:125136:34)\n    at async runPnpm (/usr/local/lib/node_modules/pnpm/dist/pnpm.cjs:125346:5)\n    at async /usr/local/lib/node_modules/pnpm/dist/pnpm.cjs:125338:7"
     }
   }
 }
