@@ -61,6 +61,9 @@
             - noImplicitThis
                 - Boolean
                 - 开启对隐式this的检查
+            - experimentalDecorators
+                - Boolean
+                - 关闭对使用装饰器的警告(因为在当前时间节点装饰器仍未正式上线Js)
     - include
         - String[]
         - 配置需要编译的文件夹
@@ -115,6 +118,8 @@
         - 例如: let sex: "男" | "女";   这样sex就只能从男/女中取值
     - : [string, boolean, number]
         - 约定为一个固定长度的数组, 自定义数组内每个位置的数据类型
+    - : new() => object
+        - 约定为一个类或者构造函数
 
 ```ts
     let str1: string = 'Code'
@@ -930,5 +935,29 @@ console.log(result) // 3
     function print1(this: any, msg: string): boolean {
         console.log(this.name, this.age, msg);
         return true;
+    }
+```
+
+## 装饰器
+
+装饰器用于分离关注点, 为类、属性、参数、方法提供元数据, 会在编译后的Js代码中存在, 装饰器运行时间位于类定义之后, 修饰器关键字 **@**
+
+多装饰器运行顺序取决于顺序, 例如:```@test1() \n @test2() \n @test3()```, 则这三个装饰器执行顺序为```test1() \n test2() \n test3() \n  test3 \n test2 \n test1```, 自行可以通过tsc编译后的js代码分析会更加清楚
+
+装饰器函数写法:
+```ts
+    // 注意两种装饰器的书写方式
+    // @test该种方式使用的装饰器函数的target参数为User类
+    @test
+    // @test1()该种方式使用的装饰器函数的str为自己传入参数, 返回函数的target为User类
+    @test1("Hello")
+    class User {}
+
+    // 第一种方式
+    function test(target: new (...args: any[]) => object) {}
+
+    // 第二种方式
+    function test1(str: string) {
+        return (target: new (...args: any[]) => object) => {}
     }
 ```

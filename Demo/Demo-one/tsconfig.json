@@ -12,7 +12,8 @@
     "moduleResolution": "Node",
     "strictPropertyInitialization": true,
     "noImplicitAny": true,
-    "noImplicitThis": true
+    "noImplicitThis": true,
+    "experimentalDecorators": true
   },
   "include": ["./src"],
   // "files": ["./src/index.ts"]
