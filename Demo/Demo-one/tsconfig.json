@@ -13,7 +13,8 @@
     "strictPropertyInitialization": true,
     "noImplicitAny": true,
     "noImplicitThis": true,
-    "experimentalDecorators": true
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true 
   },
   "include": ["./src"],
   // "files": ["./src/index.ts"]

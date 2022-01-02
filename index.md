@@ -961,3 +961,208 @@ console.log(result) // 3
         return (target: new (...args: any[]) => object) => {}
     }
 ```
+
+```ts
+    @test()
+    @test1()
+    class User {
+        @test3
+        @test4("名字")
+        private name: string = "CodeGorgeous";
+
+        @test5
+        @test6("性别")
+        private static sex: "男" | "女" = "男";
+        
+        private age: number = 21;
+
+        @test7
+        @test8("方法1")
+        method1(): void {
+
+        }
+
+        @test9
+        @test10("方法2")
+        static method2(): void {
+
+        }
+    }
+
+    function test() {
+        console.log("test");
+        return (target: new (...args: any[]) => object) => {
+            console.log("test fn")
+        }
+    }
+
+    function test1() {
+        console.log("test1");
+        return (target: new (...args: any[]) => object) => {
+            console.log("test1 fn")
+        }
+    }
+
+    /**
+     * 普通成员的装饰器函数参数target指向原型对象, key为成员键名
+     */
+    function test3(target: any, key: string) {
+        console.log("test3", target, key);
+        if (!target._props) {
+            target._props = [];
+        }
+        target._props.push(key);
+    }
+
+    function test4(str: string) {
+        console.log(str);
+        return (target: any, key: string) => {
+            console.log("test4", target, key);
+        }
+    }
+
+    /**
+     * 静态成员的装饰器函数参数target指向当前类, key为成员键名
+     */
+    function test5(target: any, key: string) {
+        console.log("test5", target, key);
+    }
+
+    function test6(str: string) {
+        console.log(str);
+        return (target: any, key: string) => {
+            console.log("test6", target, key);
+        }
+    }
+
+    /**
+     * 成员方法的装饰器函数参数target指向原型对象, key为方法名, descriptor就是Object.defineProperty()的第三个参数对象描述
+     */
+    function test7(target: any, key: string, descriptor: PropertyDescriptor) {
+        console.log("test7", target, key, descriptor);
+    }
+
+    function test8(str: string) {
+        console.log(str);
+        return (target: any, key: string, descriptor: PropertyDescriptor) => {
+            console.log("test8", target, key, descriptor);
+        }
+    }
+
+    /**
+     * 静态方法的装饰器函数参数target指向当前类, key为方法名, descriptor就是Object.defineProperty()的第三个参数对象描述
+     */
+    function test9(target: any, key: string, descriptor: PropertyDescriptor) {
+        console.log("test9", target, key, descriptor);
+    }
+    Object.defineProperty
+    function test10(str: string) {
+        console.log(str);
+        return (target: any, key: string, descriptor: PropertyDescriptor) => {
+            console.log("test10", target, key, descriptor);
+        }
+    }
+
+    const user = new User();
+    console.log((user as any)._props); // ["name"]
+```
+
+关于装饰器的第三方库:
+    - [reflect-metadata](https://www.npmjs.com/package/reflect-metadata)
+    - [class-transformer](https://www.npmjs.com/package/class-transformer)
+    - [class-validator](https://www.npmjs.com/package/class-validator)
+
+## 类型推算
+
+- typeof
+    - 使一个变量的类型与另一个变量的未知的类型始终保持一致
+    -   ```ts
+            class User {
+                name: string = "cg"
+                age: number = 21
+            }
+
+            // 注意User这种类型就是类的一个实例对象而不是类本身, typeof User或者 new () => User这种类型才是类本身
+            function createUser(clas: typeof User): User {
+                return new clas();
+            }
+        ```
+- keyof
+    - 用于动态获取类/接口/类型别名中的所有成员组成的联合类型
+    -   ```ts
+            // 类示例演示
+            class User {
+                name: string = "cg"
+                age: number = 21
+            }
+
+            const user = new User();
+
+            function printVal(obj: User, key: keyof User) {
+                return obj[key];
+            }
+
+            printVal(user, "name"); // cg
+            // printVal(user, "sex"); // 类型“"sex"”的参数不能赋给类型“keyof User”的参数
+
+            interface User1 {
+                name: string
+                age: number
+                sex: "男" | "女"
+            }
+
+            // 接口示例演示
+            const user1: User1 = {
+                name: "cg",
+                age: 21,
+                sex: "男"
+            }
+
+            function printVal1(obj: User1, key: keyof User1) {
+                return obj[key];
+            }
+
+            printVal1(user1, "age"); // 21
+            // printVal1(user1, "pid"); // 类型“"pid"”的参数不能赋给类型“keyof User1”的参数
+
+            // 类型别名示例演示
+            type User2 = {
+                name: string
+                age: number
+                pid: string
+            }
+
+            const user2: User2 = {
+                name: "cg",
+                age: 21,
+                pid: "xxxxxxxxxxxxxxxxxx"
+            }
+
+            function printVal2(obj: User2, key: keyof User2) {
+                return obj[key];
+            }
+
+            printVal2(user2, "pid"); // xxxxxxxxxxxxxxxxxx
+            // printVal2(user2, "sex"); // 类型“"sex"”的参数不能赋给类型“keyof User2”的参数
+        ```
+- in
+    - 
+    -   ```ts
+            interface User {
+                name: string
+                age: number
+                sex: "男" | "女"
+            }
+
+            // 快速根据一个类型得到一个新的类型
+            type UserReadonly = {
+                readonly [prop in keyof User]: User[prop]
+            }
+
+            const user: UserReadonly = {
+                name: "cg",
+                age: 21,
+                sex: "男"
+            }
+        ```
+
