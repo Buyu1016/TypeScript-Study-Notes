@@ -1,13 +1,30 @@
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
+let user;
+user = {};
+let user1;
+user1 = {
+    name: "cg",
+    age: 21,
+    pid: "xxxxxxxxxxxxxxxxxxxx"
 };
-let User = class User {
+let user2;
+user2 = {
+    name: "cg",
+    age: 21
 };
-User = __decorate([
-    test
-], User);
-function test(target) {
+let user3;
+user3 = "prop1";
+user3 = "prop3";
+let user4;
+user4 = "prop2";
+let user5;
+user5 = "prop1";
+user5 = "prop4";
+let user6;
+user6 = {
+    name: "cg",
+    age: 21
+};
+class User3 {
 }
+let user7;
+//# sourceMappingURL=index.js.map

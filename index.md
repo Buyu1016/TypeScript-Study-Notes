@@ -64,6 +64,12 @@
             - experimentalDecorators
                 - Boolean
                 - 关闭对使用装饰器的警告(因为在当前时间节点装饰器仍未正式上线Js)
+            - declaration
+                - Boolean
+                - 打包项目是否自动生成声明文件
+            - sourceMap
+                - Boolean
+                - 打包项目是否自动生成源码地图
     - include
         - String[]
         - 配置需要编译的文件夹
@@ -1166,3 +1172,26 @@ console.log(result) // 3
             }
         ```
 
+在TS中已经预设好的类型推算
+    - Partial<T>
+        - 将T内的所有属性都变为是可选的
+    - Required<T>
+        - 将T内的所有属性都变为是必填的
+    - Readonly<T>
+        - 将T内的所有属性都变为是可读的
+    - Exclude<T, U>
+        - 将T内的类型中剔除U中含有的类型
+        - 常用于联合类型处理
+    - Extract<T, U>
+        - 将T内的类型中剔除除U中含有的类型
+        - 常用于联合类型处理
+    - NonNullable<T>
+        - 将T内的null类型和undefined类型剔除
+    - ReturnType<T>
+        - 获知T函数的返回值类型
+    - InstanceType<T>
+        - 获知T类的实例对象类型
+
+## 声明文件
+
+以 **.d.ts**结尾的文件就是声明文件, 用于在编写Ts代码时也想要知道原来Js代码编写的相关类型提示, 开发者编写的是Ts文件想要打包自动生成 **.d.ts**需要配置开启 **declaration**

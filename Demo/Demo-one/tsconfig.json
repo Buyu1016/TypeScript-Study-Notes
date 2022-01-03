@@ -14,7 +14,9 @@
     "noImplicitAny": true,
     "noImplicitThis": true,
     "experimentalDecorators": true,
-    "emitDecoratorMetadata": true 
+    "emitDecoratorMetadata": true,
+    "declaration": true,
+    "sourceMap": true
   },
   "include": ["./src"],
   // "files": ["./src/index.ts"]
